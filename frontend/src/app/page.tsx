@@ -1,29 +1,31 @@
-import Features from '../components/Features';
+import React, { useState } from 'react';
+import Navbar from '../components/Navbar';
 import Events from '../components/Events';
 import Supports from '../components/Supports';
+import { events as allEvents } from '../data/events';
+import { supports as allSupports } from '../data/supports';
 
 export default function Home() {
+  const [search, setSearch] = useState('');
+
+  const filteredEvents = allEvents.filter((event) =>
+    event.title.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const filteredSupports = allSupports.filter((support) =>
+  support.title.toLowerCase().includes(search.toLowerCase())
+);
+
+<Supports supports={filteredSupports} />
+
   return (
-    <main className="bg-white text-black">
-      {/* Hero */}
-      <section className="flex items-center justify-center h-[400px] bg-gray-100 text-center">
-        <div>
-          <h1 className="text-3xl font-bold mb-4">
-            We are here to be your eyes and ears.
-          </h1>
-          <p className="text-gray-600">A world we step together, a world we live together.</p>
-        </div>
-      </section>
+    <main>
+      <Navbar setSearch={setSearch} />
 
-      {/* Features */}
-      <Features />
+      {/* Hero, Features */}
 
-      {/* Events */}
-      <Events />
-
-      {/* Supports */}
-      <Supports />
+      <Events events={filteredEvents} />
+      <Supports supports={filteredSupports} />
     </main>
   );
 }
-
