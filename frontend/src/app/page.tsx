@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Events from '../components/Events';
@@ -13,17 +15,13 @@ export default function Home() {
   );
 
   const filteredSupports = allSupports.filter((support) =>
-  support.title.toLowerCase().includes(search.toLowerCase())
-);
-
-<Supports supports={filteredSupports} />
+    support.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <main>
       <Navbar setSearch={setSearch} />
-
       {/* Hero, Features */}
-
       <Events events={filteredEvents} />
       <Supports supports={filteredSupports} />
     </main>
