@@ -6,6 +6,11 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
+print("LOADED DB VALUES:")
+print("DB NAME:", os.getenv("DB_NAME"))
+print("DB USER:", os.getenv("DB_USER"))
+print("DB PASSWORD:", os.getenv("DB_PASSWORD"))
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-placeholder")
 
