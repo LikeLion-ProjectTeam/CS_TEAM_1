@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 # Load .env file from project root
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(os.path.join(BASE_DIR, ".env"))
+load_dotenv(os.path.join(BASE_DIR.parent, ".env"))
 
 print("LOADED DB VALUES:")
 print("DB NAME:", os.getenv("DB_NAME"))
