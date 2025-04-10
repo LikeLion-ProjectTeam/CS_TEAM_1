@@ -12,6 +12,16 @@ from .models import SearchResult
 # .env 파일 로드
 load_dotenv()
 
+# 해시태그 필터링을 위한 미리 정의된 키워드
+PREDEFINED_KEYWORDS = [
+    "blind", "deaf", "physical disability", "intellectual disability", "autism spectrum disorder",
+    "welfare", "financial aid", "disability", "benefits", "SSI", "grants",
+    "accessibility", "universal design", "assistive technology", "accessible design", "screen reader",
+    "audiodescription", "braille", "ASL", "sign language", "hearing aids", "prosthesis", "mental health awareness",
+    "inclusion", "disability rights", "emotional intelligence", "community support", "smart devices",
+    "Alexa", "Google Assistant", "Siri", "voice control", "captioning", "deaf culture"
+]
+
 # --- 검색 결과 조회 API ---
 def search_results(request):
     keyword = request.GET.get('keyword', '')    # 유저 입력 검색어
@@ -95,16 +105,21 @@ def search_google(request):
                 link = r.get("link")
                 snippet = r.get("snippet", "") # 구글에 나온 summary
                 
-                # tags 생성
-                tags = query.lower().split()
+                # 미리 정의된 키워드가 title, snippet에 있는지 확인 후 분류
+                matched_tags = []
+                for keyword in PREDEFINED_KEYWORDS:
+                    if keyword.lower() in snippet or (title and keyword.lower() in title.lower()):
+                        matched_tags.append(keyword)
+                
+                state = "California"
 
                 SearchResult.objects.create(
                     title=title,
-                    state="California", 
+                    state=state,
                     summary=snippet,
                     source_url=link,
                     publish_date=date.today(),
-                    tags=tags
+                    tags=matched_tags
                 )
 
             return JsonResponse({"message": "Title scraped and saved to DB!"}, status=201)
