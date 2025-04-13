@@ -1,26 +1,26 @@
 import React from 'react';
 
 const features = [
-  { title: 'Support', desc: 'Lorem ipsum dolor sit amet.', icon: '🦾' },
-  { title: 'Finding jobs', desc: 'Consectetur adipiscing elit.', icon: '💼' },
-  { title: 'Connect', desc: 'Connect people around.', icon: '🔗' },
-  { title: 'Information', desc: 'Share important info.', icon: 'ℹ️' },
-  { title: 'Communication', desc: 'Effective messaging.', icon: '💬' },
-  { title: 'Result', desc: 'Track outcomes.', icon: '✅' },
+  { title: "Support", desc: "Lorem ipsum dolor sit amet." },
+  { title: "Finding jobs", desc: "Consectetur adipiscing elit." },
+  { title: "Connect", desc: "Connect people around." },
+  { title: "Information", desc: "Lorem ipsum dolor sit amet." },
+  { title: "Communication", desc: "Consectetur adipiscing elit." },
+  { title: "Result", desc: "Connect people around." },
 ];
 
-const Features = () => (
-  <div className="grid grid-cols-3 gap-8 px-16 py-10 text-center">
-    {features.map((f, idx) => (
-      <div key={idx} className="border rounded-xl p-4 shadow hover:shadow-lg transition duration-300">
-        <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">
-          {f.icon}
-        </div>
-        <h3 className="text-lg font-semibold">{f.title}</h3>
-        <p className="text-gray-600 text-sm">{f.desc}</p>
+export default function Features() {
+  return (
+    <section className="py-12 px-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        {features.map((f, i) => (
+          <div key={i} className="rounded-lg border text-center p-6 bg-white shadow-sm">
+            <div className="w-12 h-12 mx-auto rounded-full bg-gray-200 mb-4" />
+            <h3 className="font-semibold mb-2">{f.title}</h3>
+            <p className="text-sm text-gray-500">{f.desc}</p>
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-);
-
-export default Features;
+    </section>
+  );
+}
