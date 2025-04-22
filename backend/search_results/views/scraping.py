@@ -30,10 +30,10 @@ def search_google(request):
         params = {
             "engine": "google",                          # 검색 엔진 종류
             "q": query,                                  # 검색어
-            "location": "California, United States",     # 위치 기반 결과 (임시 고정)
+            "location": "Wisconsin, United States",     # 위치 기반 결과 (임시 고정)
             "hl": "en",                                  # 언어 (영어)
             "gl": "us",                                  # 국가 코드
-            "api_key": "" # 자기 serpapi api_key " " 사이에 넣기!
+            "api_key": "52b4865a0ce2899976b68c7d33b1a7e0e12a58a620005305fa538935173e432e" # 자기 serpapi api_key " " 사이에 넣기!
         }
 
         try:
