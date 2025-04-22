@@ -43,7 +43,7 @@ def search_google(request):
             # print("SerpAPI 응답 keys:", results.keys())
             
             # 검색 결과 중 상위 1개만 추출 (for testing)
-            top_results = results.get("organic_results", [])[:1]
+            top_results = results.get("organic_results", [])[:5]
 
             # 검색 결과 없을 경우, return
             if not top_results:
