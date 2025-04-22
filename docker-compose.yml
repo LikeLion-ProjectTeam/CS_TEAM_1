@@ -1,0 +1,42 @@
+services:
+  backend:
+    build: ./backend
+    container_name: my-backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: my-frontend
+    ports:
+      - "13000:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=development
+
+  db:  
+    image: postgres:15
+    container_name: my-db
+    restart: always
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "15432:5432"
+
+  redis:
+    image: redis:7
+    container_name: my-redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:

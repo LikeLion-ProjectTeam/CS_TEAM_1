@@ -9,25 +9,24 @@ import Footer from "../components/Footer";
 import { fetchEvents, fetchSupports } from "../lib/api";
 
 type EventType = {
-    title: string;
-    desc: string;
-    date: string;
-    tags: string[];
-  };
-  
-  type SupportType = {
-    title: string;
-    desc: string;
-    date: string;
-    location: string;
-    tags: string[];
-  };  
+  title: string;
+  desc: string;
+  date: string;
+  tags: string[];
+};
+
+type SupportType = {
+  title: string;
+  desc: string;
+  date: string;
+  location: string;
+  tags: string[];
+};
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [events, setEvents] = useState<EventType[]>([]);
   const [supports, setSupports] = useState<SupportType[]>([]);
-
 
   useEffect(() => {
     async function loadData() {
@@ -109,6 +108,7 @@ export default function Home() {
         </div>
       </section>
 
+      <Footer />
     </main>
   );
 }
