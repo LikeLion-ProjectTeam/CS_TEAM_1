@@ -30,7 +30,7 @@ def search_google(request):
         params = {
             "engine": "google",                          # 검색 엔진 종류
             "q": query,                                  # 검색어
-            "location": "California, United States",     # 위치 기반 결과 (임시 고정)
+            "location": "Wisconsin, United States",     # 위치 기반 결과 (임시 고정)
             "hl": "en",                                  # 언어 (영어)
             "gl": "us",                                  # 국가 코드
             "api_key": "" # 자기 serpapi api_key " " 사이에 넣기!
@@ -43,7 +43,7 @@ def search_google(request):
             # print("SerpAPI 응답 keys:", results.keys())
             
             # 검색 결과 중 상위 1개만 추출 (for testing)
-            top_results = results.get("organic_results", [])[:1]
+            top_results = results.get("organic_results", [])[:5]
 
             # 검색 결과 없을 경우, return
             if not top_results:
@@ -74,7 +74,7 @@ def search_google(request):
                 except Exception:
                     publish_date = date.today()
 
-                state = "California" # 현재는 고정값
+                state = "Wisconsin" # 현재는 고정값
 
                 # 검색(scraping)한 결과 최종 DB 저장
                 SearchResult.objects.create(
