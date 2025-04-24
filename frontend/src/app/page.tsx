@@ -6,41 +6,40 @@ import Features from "../components/Features";
 import Events from "../components/Events";
 import Supports from "../components/Supports";
 import Footer from "../components/Footer";
-import { fetchEvents, fetchSupports } from "../lib/api";
-
-type EventType = {
-  title: string;
-  desc: string;
-  date: string;
-  tags: string[];
-};
-
-type SupportType = {
-  title: string;
-  desc: string;
-  date: string;
-  location: string;
-  tags: string[];
-};
+import { SupportType, EventType } from "../types";
+import { events as allEvents } from "../data/events";
+import { fetchTagSearch, fetchMultiSearch } from "../lib/searchApi";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [events, setEvents] = useState<EventType[]>([]);
   const [supports, setSupports] = useState<SupportType[]>([]);
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const e = await fetchEvents();
-        const s = await fetchSupports();
-        setEvents(e);
-        setSupports(s);
-      } catch (err) {
-        console.error("Failed to fetch:", err);
-      }
+useEffect(() => {
+  async function loadData() {
+    try {
+      // First try multi-search
+      const multiResults = await fetchMultiSearch({
+        keyword: "disability",
+        hashtags: ["support"],
+        category: "event"
+      });
+      setEvents(multiResults.results || []);
+
+      // Then try tag search
+      const tagResults = await fetchTagSearch("deaf");
+      setSupports(tagResults);
+      
+    } catch (err) {
+      console.error("Failed to load data:", err);
+      // Fallback to placeholder data if API fails
+      setEvents(allEvents);
+      setSupports([]); // Or some default support data
     }
-    loadData();
-  }, []);
+  }
+
+  loadData();
+}, []);
 
   const filteredEvents = events.filter((event) =>
     event.title.toLowerCase().includes(search.toLowerCase())
@@ -54,13 +53,15 @@ export default function Home() {
     <main className="bg-white text-black font-sans">
       <Navbar setSearch={setSearch} />
 
-      {/* Hero Section */}
-      <section className="relative h-[500px] w-full">
-        <img
-          src="/hero.jpg"
-          alt="Hero"
-          className="absolute inset-0 h-full w-full object-cover z-0"
-        />
+      {/* Hero */}
+      <section className="relative h-[500px] w-full overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/hero.jpg"
+            alt="Hero"
+            className="w-full h-full object-cover filter blur-sm brightness-50 scale-105"
+          />
+        </div>
         <div className="relative z-10 flex h-full flex-col items-center justify-center text-white text-center px-4">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4">
             We are here to be your eyes and ears.
@@ -71,21 +72,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Grid */}
+      {/* Features */}
       <section className="py-12 px-6 max-w-6xl mx-auto bg-white">
         <Features />
       </section>
 
-      {/* Events Section */}
-      <section className="py-12 px-6 max-w-6xl mx-auto bg-white text-black">
-        <Events events={filteredEvents} />
+      {/* Events */}
+      <section className="py-12 px-6 max-w-6xl mx-auto bg-white">
+        <Events events={filteredEvents.length ? filteredEvents : allEvents} />
       </section>
 
-      {/* Supports Section */}
-      <section className="py-12 px-6 max-w-6xl mx-auto bg-white text-black">
+      {/* Supports */}
+      <section className="py-12 px-6 max-w-6xl mx-auto bg-white">
         <Supports supports={filteredSupports} />
 
-        {/* Pagination UI */}
+        {/* Pagination */}
         <div className="flex justify-center items-center gap-2 py-10 text-sm">
           <button className="px-2 py-1 text-gray-400" disabled>
             &lt; Previous
@@ -108,7 +109,6 @@ export default function Home() {
         </div>
       </section>
 
-      <Footer />
     </main>
   );
 }
