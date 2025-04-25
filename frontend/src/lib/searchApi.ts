@@ -1,4 +1,3 @@
-// src/lib/searchApi.ts
 const BASE_URL = "http://localhost:8000/api";
 
 export async function fetchTagSearch(tag: string) {
@@ -29,7 +28,6 @@ export async function fetchMultiSearch(params: {
     if (params.start_date) query.append('start_date', params.start_date);
     if (params.end_date) query.append('end_date', params.end_date);
     
-    // Handle array of hashtags
     if (params.hashtags) {
       params.hashtags.forEach(tag => {
         query.append('hashtags', tag);
