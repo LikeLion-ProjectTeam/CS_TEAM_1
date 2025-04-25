@@ -1,6 +1,6 @@
 const Footer = () => (
-    <footer className="text-center py-6 text-gray-500 text-sm border-t mt-10">
-      © 2025 Disable Helper. All rights reserved.
+    <footer className="bg-white text-black py-6 text-center border-t">
+      © 2025 Disability Helper. All rights reserved.
     </footer>
   );
   

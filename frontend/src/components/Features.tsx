@@ -1,26 +1,19 @@
 import React from 'react';
+import { features } from "../data/features";
 
-const features = [
-  { title: 'Support', desc: 'Lorem ipsum dolor sit amet.', icon: '🦾' },
-  { title: 'Finding jobs', desc: 'Consectetur adipiscing elit.', icon: '💼' },
-  { title: 'Connect', desc: 'Connect people around.', icon: '🔗' },
-  { title: 'Information', desc: 'Share important info.', icon: 'ℹ️' },
-  { title: 'Communication', desc: 'Effective messaging.', icon: '💬' },
-  { title: 'Result', desc: 'Track outcomes.', icon: '✅' },
-];
-
-const Features = () => (
-  <div className="grid grid-cols-3 gap-8 px-16 py-10 text-center">
-    {features.map((f, idx) => (
-      <div key={idx} className="border rounded-xl p-4 shadow hover:shadow-lg transition duration-300">
-        <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">
-          {f.icon}
+export default function Features() {
+  return (
+    <section className="grid grid-cols-1 sm:grid-cols-3 gap-y-12 gap-x-4 text-center text-gray-700 py-12 border-t border-gray-200">
+    {features.map((feature, index) => (
+      <div key={index} className="px-4">
+        <div className="mx-auto w-20 h-20 rounded-full bg-white flex items-center justify-center mb-4">
+          {feature.icon && <img src={feature.icon} alt={feature.title} className="mx-auto mb-4 w-20 h-20 sm:w-24 sm:h-24" />}
         </div>
-        <h3 className="text-lg font-semibold">{f.title}</h3>
-        <p className="text-gray-600 text-sm">{f.desc}</p>
+        <h3 className="text-lg font-semibold text-black">{feature.title}</h3>
+        <p className="mt-2 text-sm text-gray-600">{feature.desc}</p>
       </div>
     ))}
-  </div>
-);
-
-export default Features;
+  </section>
+  
+  );
+}
