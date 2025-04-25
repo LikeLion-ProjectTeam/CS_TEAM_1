@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     libffi-dev \
     curl \
  && curl https://sh.rustup.rs -sSf | sh -s -- -y \
+ && PATH="/root/.cargo/bin:$PATH" pip install --upgrade pip setuptools wheel \
  && PATH="/root/.cargo/bin:$PATH" pip install --no-cache-dir -r requirements.txt \
  && rm -rf /var/lib/apt/lists/*
 
